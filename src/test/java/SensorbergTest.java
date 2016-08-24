@@ -1,6 +1,5 @@
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.http.Header;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -8,6 +7,8 @@ import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import pageObjects.AccountPage;
+import pageObjects.LoginPage;
 import utils.LoadProperties;
 
 import java.io.IOException;
@@ -28,9 +29,11 @@ public class SensorbergTest {
     }
 
     @Before
-    public void setup() throws IOException {
+    public void setup() throws IOException, InterruptedException {
         driver.get(loadProperties.getProperies("LOGIN_URL"));
         driver.manage().window().maximize();
+        LoginPage.loginAsUser(driver, loadProperties.getProperies("EMAIL_MM"), loadProperties.getProperies("PASSWORD_MM"));
+        AccountPage.verifyPage(driver);
     }
 
     @After
@@ -40,7 +43,6 @@ public class SensorbergTest {
 
 
     public String loginAndGetToken() throws IOException {
-        Header header = new Header("Content-Type", "application/x-www-form-urlencoded");
         Response response = RestAssured.given()
                 .formParam("username", loadProperties.getProperies("EMAIL_KK"))
                 .formParam("password", loadProperties.getProperies("PASSWORT_KK"))

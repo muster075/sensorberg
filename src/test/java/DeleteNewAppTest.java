@@ -4,7 +4,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pageObjects.AccountPage;
 import pageObjects.AppMgmtPage;
-import pageObjects.LoginPage;
 
 import java.io.IOException;
 
@@ -24,7 +23,7 @@ public class DeleteNewAppTest extends SensorbergTest {
     }
 
     @Before
-    public void setup() throws IOException {
+    public void setup() throws IOException, InterruptedException {
         super.setup();
     }
 
@@ -36,7 +35,6 @@ public class DeleteNewAppTest extends SensorbergTest {
 
     @org.junit.Test
     public void testDeleteAppFromList() throws InterruptedException, IOException {
-        LoginPage.loginAsUser(driver, loadProperties.getProperies("EMAIL_KK"), loadProperties.getProperies("PASSWORD_KK"));
         wait.until(ExpectedConditions.presenceOfElementLocated(AccountPage.usermenu_link));
         AccountPage.getApp(driver).click();
 

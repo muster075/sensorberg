@@ -1,7 +1,4 @@
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -25,7 +22,7 @@ public class CreateNewBeaconTest extends SensorbergTest {
     }
 
     @Before
-    public void setup() throws IOException {
+    public void setup() throws IOException, InterruptedException {
         super.setup();
     }
 
@@ -38,8 +35,6 @@ public class CreateNewBeaconTest extends SensorbergTest {
     public void testCreateNewBeacon() throws IOException, InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 10);
 
-        LoginPage.loginAsUser(driver, loadProperties.getProperies("EMAIL_KK"), loadProperties.getProperies("PASSWORD_KK"));
-
         AccountPage.getBeacon(driver).click();
         BeaconAddPage.createNewBeacon(driver, TEST_BEACON_NAME);
         AccountPage.checkToastMsg(driver, "Beacon erfolgreich hinzugefügt");
@@ -48,9 +43,9 @@ public class CreateNewBeaconTest extends SensorbergTest {
         Assert.assertEquals(TEST_BEACON_NAME, driver.findElement(cell_name).getText());
 
         //test new API
-        String token = loginAndGetToken();
+//        String token = loginAndGetToken();
         given()
-            .header("X-Auth-Token", token).
+            .header("X-Auth-Token", "f249d101609a99543a8325272e181c4ea4945b509cec3ff7f2e1d7fe23fa12dd").
         when()
             .get(loadProperties.getProperies("API.BASEURI")+loadProperties.getProperies("API.BEACONS")).
         then()

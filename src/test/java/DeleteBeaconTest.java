@@ -6,7 +6,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pageObjects.AccountPage;
 import pageObjects.BeaconMgmtPage;
-import pageObjects.LoginPage;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -26,7 +25,7 @@ public class DeleteBeaconTest extends SensorbergTest {
     }
 
     @Before
-    public void setup() throws IOException {
+    public void setup() throws IOException, InterruptedException {
         super.setup();
     }
 
@@ -35,10 +34,8 @@ public class DeleteBeaconTest extends SensorbergTest {
         super.teardown();
     }
 
-
     @org.junit.Test
     public void testDeleteAppFromList() throws InterruptedException, IOException {
-        LoginPage.loginAsUser(driver, loadProperties.getProperies("EMAIL_KK"), loadProperties.getProperies("PASSWORD_KK"));
         wait.until(ExpectedConditions.presenceOfElementLocated(AccountPage.usermenu_link));
 
         AccountPage.getBeacon(driver).click();
